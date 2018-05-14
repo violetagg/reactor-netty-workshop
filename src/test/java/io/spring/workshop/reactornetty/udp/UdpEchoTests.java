@@ -39,7 +39,22 @@ public class UdpEchoTests {
         assertNotNull(server);
 
         // TODO
+        // Task 5:
+        // 5.1. Prepare the UDP client
+        // 5.2. Obtain the server's port and provide it as a port to which this
+        //      client should connect
+        // 5.3. Connect the client
+        // 5.4. Subscribe to the returned Mono<Connection> and block
+        Connection client = null;
+
+        assertNotNull(client);
+
+        // TODO
         // Task 2:
         // 2.1. Close the underlying channel opened by the UDP server
+
+        // TODO
+        // Task 6:
+        // 6.1. Close the underlying channel opened by the UDP client
     }
 }
