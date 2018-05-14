@@ -59,6 +59,8 @@ public class UdpEchoTests {
         Connection client =
                 UdpClient.create()                        // Prepares a UDP client for configuration.
                          .remoteAddress(server::address)  // Obtains the server's address and provide it as an address to which this client should connect.
+                         .runOn(loopResources)            // Configures the UDP client to run on a specific LoopResources.
+                         .wiretap(true)                   // Applies a wire logger configuration.
                          .connect()                       // Connects the client.
                          .block();                        // Subscribes to the returned Mono<Connection> and block.
 
