@@ -11,7 +11,11 @@ import reactor.netty.resources.LoopResources;
 import reactor.netty.udp.UdpClient;
 import reactor.netty.udp.UdpServer;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Learn how to create a UDP server and client
@@ -23,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 public class UdpEchoTests {
 
     @Test
-    public void echoTest() {
+    public void echoTest() throws Exception {
         LoopResources loopResources = LoopResources.create("echo-test-udp");
         Connection server =
                 UdpServer.create() // Prepares a UDP server for configuration.
@@ -56,16 +60,35 @@ public class UdpEchoTests {
 
         assertNotNull(server);
 
+        CountDownLatch latch = new CountDownLatch(1);
         Connection client =
                 UdpClient.create()               // Prepares a UDP client for configuration.
                          .port(server.address()  // Obtains the server's port and provide it as a port to which this
                                      .getPort()) // client should connect.
                          .runOn(loopResources)   // Configures the UDP client to run on a specific LoopResources.
                          .wiretap()              // Applies a wire logger configuration.
+                         .handle((in, out) ->
+                                 out.sendString(Mono.just("World!"))
+                                    .then(in.receiveObject()
+                                            .doOnNext(o -> {
+                                                if (o instanceof DatagramPacket) {
+                                                    // Incoming DatagramPacket
+                                                    DatagramPacket p = (DatagramPacket) o;
+                                                    if ("Hello World!".equals(p.content()
+                                                                               .toString(CharsetUtil.UTF_8))) {
+                                                        latch.countDown();
+                                                    }
+                                                }
+                                            })
+                                            .then())
+                                    .then()
+                                    .log("udp-client"))
                          .connect()              // Connects the client.
                          .block();               // Subscribes to the returned Mono<Connection> and block.
 
         assertNotNull(client);
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
 
         server.disposeNow();       // Stops the server and releases the resources.
 
