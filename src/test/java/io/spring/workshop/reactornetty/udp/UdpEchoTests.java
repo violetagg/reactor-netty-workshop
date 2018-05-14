@@ -28,6 +28,11 @@ public class UdpEchoTests {
         // 3.1. Create a new simple LoopResources
         // 3.2. Configure the UDP server to run on this newly created LoopResources
         // 3.3. Apply a wire logger configuration
+        //
+        // Task 4:
+        // 4.1. Attach an IO handler to react on connected client
+        // 4.2. When receive an object (io.netty.channel.socket.DatagramPacket),
+        //      transform it and send the new object to the client
         LoopResources loopResources = null;
         Connection server = null;
 
