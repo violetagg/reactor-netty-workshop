@@ -4,7 +4,12 @@ import org.junit.jupiter.api.Test;
 import reactor.netty.Connection;
 import reactor.netty.resources.LoopResources;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Learn how to create UDP server and client
@@ -16,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class UdpEchoTests {
 
     @Test
-    public void echoTest() {
+    public void echoTest() throws Exception {
         // TODO
         // Task 1:
         // 1.1. Prepare the UDP server
@@ -50,9 +55,18 @@ public class UdpEchoTests {
         // 7.1. Create a new simple LoopResources
         // 7.2. Configure the UDP client to run on this newly created LoopResources
         // 7.3. Apply a wire logger configuration
+        //
+        // Task 8:
+        // 8.1. Attach an IO handler
+        // 8.2. Send a string over the wire
+        // 8.3. When receive an object (io.netty.channel.socket.DatagramPacket),
+        //      inspect whether is it the expected reply and decrements the count of the latch
+        CountDownLatch latch = new CountDownLatch(1);
         Connection client = null;
 
         assertNotNull(client);
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
 
         // TODO
         // Task 2:
