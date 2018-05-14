@@ -39,6 +39,10 @@ public class UdpSupportsReceivingDatagramTests {
         // 3.5. Create a new simple LoopResources
         // 3.6. Configure the UDP server to run on this newly created LoopResources
         // 3.7. Apply a wire logger configuration
+        //
+        // Task 5:
+        // 5.1. As soon as bind operation completed successfully, open a DatagramChannel,
+        //      connect to the server1's port, send data and close the channel
         Connection server2 = null;
 
         assertNotNull(server2);
