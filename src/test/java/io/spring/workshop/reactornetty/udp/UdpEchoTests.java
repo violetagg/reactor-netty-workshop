@@ -45,6 +45,11 @@ public class UdpEchoTests {
         //      client should connect
         // 5.3. Connect the client
         // 5.4. Subscribe to the returned Mono<Connection> and block
+        //
+        // Task 7:
+        // 7.1. Create a new simple LoopResources
+        // 7.2. Configure the UDP server to run on this newly created LoopResources
+        // 7.3. Apply a wire logger configuration
         Connection client = null;
 
         assertNotNull(client);
