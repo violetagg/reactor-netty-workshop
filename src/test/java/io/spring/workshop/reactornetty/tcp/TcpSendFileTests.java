@@ -4,7 +4,12 @@ import org.junit.jupiter.api.Test;
 import reactor.netty.Connection;
 import reactor.netty.DisposableServer;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Learn how to create TCP server and client
@@ -16,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TcpSendFileTests {
 
     @Test
-    public void sendFileTest() {
+    public void sendFileTest() throws Exception {
         // TODO
         // Task 1:
         // 1.1. Prepare the TCP server
@@ -49,9 +54,19 @@ public class TcpSendFileTests {
         //      use SslContextBuilder for building SslContext, as a trust manager
         //      use InsecureTrustManagerFactory
         // 7.3. Apply a wire logger configuration
+        //
+        // Task 8:
+        // 8.1. Attach an IO handler
+        // 8.2. Send the file name as string over the wire
+        // 8.3. When receive a package, transform it to byte array
+        // 8.4. Compare the received byte array with file's bytes
+        //      and if they are the same, decrement the count of the latch
+        CountDownLatch latch = new CountDownLatch(1);
         Connection client = null;
 
         assertNotNull(client);
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
 
         // TODO
         // Task 2:
