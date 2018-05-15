@@ -1,5 +1,6 @@
 package io.spring.workshop.reactornetty.tcp;
 
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -56,6 +57,11 @@ public class TcpSendFileTests {
                 TcpClient.create()            // Prepares a TCP client for configuration.
                          .port(server.port()) // Obtains the server's port and provide it as a port to which this
                                               // client should connect.
+                         // Configures SSL providing an already configured SslContext.
+                         .secure(spec -> spec.sslContext(
+                                 TcpSslContextSpec.forClient()
+                                                  .configure(builder -> builder.trustManager(InsecureTrustManagerFactory.INSTANCE))))
+                         .wiretap(true)       // Applies a wire logger configuration.
                          .connectNow();       // Blocks the client and returns a Connection.
 
         assertNotNull(client);
