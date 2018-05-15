@@ -57,6 +57,11 @@ public class TcpSendFileTests {
                 TcpClient.create()            // Prepares a TCP client for configuration.
                          .port(server.port()) // Obtains the server's port and provide it as a port to which this
                                               // client should connect.
+                         // Configures SSL providing an already configured SslContext.
+                         .secure(SslContextBuilder.forClient()
+                                                  .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                                                  .build())
+                         .wiretap()           // Applies a wire logger configuration.
                          .connectNow();       // Blocks the client and returns a Connection.
 
         assertNotNull(client);
