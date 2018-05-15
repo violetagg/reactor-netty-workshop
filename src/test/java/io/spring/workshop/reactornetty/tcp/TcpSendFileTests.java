@@ -3,7 +3,9 @@ package io.spring.workshop.reactornetty.tcp;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
+import reactor.netty.Connection;
 import reactor.netty.DisposableServer;
+import reactor.netty.tcp.TcpClient;
 import reactor.netty.tcp.TcpServer;
 import reactor.netty.tcp.TcpSslContextSpec;
 
@@ -50,6 +52,16 @@ public class TcpSendFileTests {
 
         assertNotNull(server);
 
+        Connection client =
+                TcpClient.create()            // Prepares a TCP client for configuration.
+                         .port(server.port()) // Obtains the server's port and provide it as a port to which this
+                                              // client should connect.
+                         .connectNow();       // Blocks the client and returns a Connection.
+
+        assertNotNull(client);
+
         server.disposeNow(); // Stops the server and releases the resources.
+
+        client.disposeNow(); // Stops the client and releases the resources.
     }
 }
