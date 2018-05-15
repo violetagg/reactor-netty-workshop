@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.function.Function;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -75,6 +76,33 @@ public class HttpEncodeAndDecodeJsonTests {
         DisposableServer server = null;
 
         assertNotNull(server);
+
+        // TODO
+        // Task 5:
+        // 5.1. Prepare the TCP client
+        // 5.2. Obtain the server's port and provide it as a port to which this
+        //      client should connect
+        // 5.3. Apply a wire logger configuration
+        // 5.4. Add to the request pipeline a new handler 'JsonObjectDecoder'
+        // 5.5. Prepare a POST request
+        // 5.6. Specify the path
+        // 5.7. Send the snippet below as a request body. It will do JSON encoding
+        // ----
+        //      Flux.range(1, 10)
+        //          .map(i -> new Pojo("test " + i))
+        //          .collectList()
+        //          .map(jsonEncoder)
+        // ----
+        // 5.8. Receive the response, transform it to string and do JSON decoding
+        // ----
+        //      <response-bytes>.asString()
+        //                      .map(jsonDecoder)
+        //                      .concatMap(Flux::fromArray)
+        // ----
+        // 5.9. Subscribe to the returned Flux<Pojo> and block the last element
+        Pojo response = null;
+
+        assertEquals("test 10", response.getName());
 
         // TODO
         // Task 2:
