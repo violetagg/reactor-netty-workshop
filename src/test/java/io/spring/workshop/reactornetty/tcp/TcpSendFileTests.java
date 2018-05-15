@@ -1,6 +1,7 @@
 package io.spring.workshop.reactornetty.tcp;
 
 import org.junit.jupiter.api.Test;
+import reactor.netty.Connection;
 import reactor.netty.DisposableServer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,7 +38,21 @@ public class TcpSendFileTests {
         assertNotNull(server);
 
         // TODO
+        // Task 5:
+        // 5.1. Prepare the TCP client
+        // 5.2. Obtain the server's address and provide it as an address to which this
+        //      client should connect
+        // 5.3. Block the client and return a Connection
+        Connection client = null;
+
+        assertNotNull(client);
+
+        // TODO
         // Task 2:
         // 2.1. Close the underlying channel opened by the TCP server
+
+        // TODO
+        // Task 6:
+        // 6.1. Close the underlying channel opened by the TCP client
     }
 }
