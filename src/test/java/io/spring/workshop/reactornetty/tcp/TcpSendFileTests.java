@@ -26,6 +26,12 @@ public class TcpSendFileTests {
         // Task 3:
         // 3.1. Enable SSL configuration with self singed certificate.
         // 3.3. Apply a wire logger configuration
+        //
+        // Task 4:
+        // 4.1. Attach an IO handler to react on connected client
+        // 4.2. When receive an object, transform it to string
+        //      (this will be name of the requested file)
+        // 4.3. As a response send the requested file to the client
         DisposableServer server = null;
 
         assertNotNull(server);
