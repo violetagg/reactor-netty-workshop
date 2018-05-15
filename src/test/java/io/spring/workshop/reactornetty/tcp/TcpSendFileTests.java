@@ -22,6 +22,10 @@ public class TcpSendFileTests {
         // 1.2. Configure the port to which this server should bind
         // 1.3. Start the server in a blocking fashion and wait for it
         //      to finish initializing
+        //
+        // Task 3:
+        // 3.1. Enable SSL configuration with self singed certificate.
+        // 3.3. Apply a wire logger configuration
         DisposableServer server = null;
 
         assertNotNull(server);
