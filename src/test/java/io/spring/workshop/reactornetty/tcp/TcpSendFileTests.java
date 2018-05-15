@@ -43,6 +43,12 @@ public class TcpSendFileTests {
         // 5.2. Obtain the server's address and provide it as an address to which this
         //      client should connect
         // 5.3. Block the client and return a Connection
+        //
+        // Task 7:
+        // 7.1. Apply an SSL configuration customization via a preconfigured SslContext,
+        //      use SslContextBuilder for building SslContext, as a trust manager
+        //      use InsecureTrustManagerFactory
+        // 7.3. Apply a wire logger configuration
         Connection client = null;
 
         assertNotNull(client);
