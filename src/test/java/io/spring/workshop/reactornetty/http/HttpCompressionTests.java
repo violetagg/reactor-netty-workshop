@@ -3,6 +3,7 @@ package io.spring.workshop.reactornetty.http;
 import org.junit.Test;
 import reactor.netty.DisposableServer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -33,6 +34,21 @@ public class HttpCompressionTests {
         DisposableServer server = null;
 
         assertNotNull(server);
+
+        // TODO
+        // Task 5:
+        // 5.1. Prepare the TCP client
+        // 5.2. Obtain the server's port and provide it as a port to which this
+        //      client should connect
+        // 5.3. Apply a wire logger configuration
+        // 5.4. Enable compression
+        // 5.5. Prepare a GET request
+        // 5.6. Specify the path
+        // 5.7. Receive the response, aggregate it and transform it to string
+        // 5.8. Subscribe to the returned Mono<String> and block
+        String response = null;
+
+        assertEquals("compressed response", response);
 
         // TODO
         // Task 2:
