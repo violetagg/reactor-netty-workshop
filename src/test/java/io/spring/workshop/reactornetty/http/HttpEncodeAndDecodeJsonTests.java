@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import reactor.netty.DisposableServer;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Learn how to create HTTP server and client
@@ -41,6 +45,42 @@ public class HttpEncodeAndDecodeJsonTests {
                 throw new RuntimeException(e);
             }
         };
+    }
+
+    @Test
+    public void encodeAndDecodeJsonTest() {
+        // TODO
+        // Task 1:
+        // 1.1. Prepare the HTTP server
+        // 1.2. Configure the port to which this server should bind
+        // 1.3. Start the server in a blocking fashion and wait for it
+        //      to finish initializing
+        //
+        // Task 3:
+        // 3.3. Apply a wire logger configuration
+        //
+        // Task 4:
+        // 4.1. Add to the request pipeline a new handler 'JsonObjectDecoder'
+        // 4.2. When receive the request body, transform it to string
+        // 4.3. Use the snippet below to do JSON decoding, prepare response as batches
+        //      and do JSON encoding
+        // ----
+        //    out.send(in.withConnection(c -> c.addHandler(new JsonObjectDecoder()))
+        //               .receive()
+        //               .asString()
+        //               .map(jsonDecoder)
+        //               .concatMap(Flux::fromArray)
+        //               .window(5)
+        //               .concatMap(w -> w.collectList().map(jsonEncoder))))
+        // ----
+        // 4.4. Send the response
+        DisposableServer server = null;
+
+        assertNotNull(server);
+
+        // TODO
+        // Task 2:
+        // 2.1. Close the underlying channel opened by the HTTP server
     }
 
     private static final class Pojo {
