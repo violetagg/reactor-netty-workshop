@@ -3,8 +3,10 @@ package io.spring.workshop.reactornetty.http;
 import org.junit.Test;
 import reactor.core.publisher.Mono;
 import reactor.netty.DisposableServer;
+import reactor.netty.http.client.HttpClient;
 import reactor.netty.http.server.HttpServer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -28,6 +30,22 @@ public class HttpCompressionTests {
                           .bindNow(); // Starts the server in a blocking fashion, and waits for it to finish initializing.
 
         assertNotNull(server);
+
+        String response =
+                HttpClient.create()            // Prepares a HTTP client for configuration.
+                          .port(server.port()) // Obtains the server's port and provides it as a port to which this
+                                               // client should connect.
+                          .compress(true)          // Enables compression.
+                          .wiretap()           // Applies a wire logger configuration.
+                          .get()               // Specifies that GET method will be used.
+                          .uri("/test")        // Specifies the path.
+                          .responseContent()   // Receives the response body.
+                          .aggregate()
+                          .asString()
+                          .log("http-client")
+                          .block();
+
+        assertEquals("compressed response", response);
 
         server.disposeNow();          // Stops the server and releases the resources.
     }
