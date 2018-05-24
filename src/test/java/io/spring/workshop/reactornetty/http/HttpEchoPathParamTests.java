@@ -3,6 +3,7 @@ package io.spring.workshop.reactornetty.http;
 import org.junit.jupiter.api.Test;
 import reactor.netty.DisposableServer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
@@ -35,6 +36,22 @@ public class HttpEchoPathParamTests {
         DisposableServer server = null;
 
         assertNotNull(server);
+
+        // TODO
+        // Task 5:
+        // 5.1. Prepare the TCP client
+        // 5.2. Obtain the server's port and provide it as a port to which this
+        //      client should connect
+        // 5.3. Apply a wire logger configuration
+        // 5.4. As specify header 'Content-Type: text/plain'
+        // 5.5. Prepare a POST request
+        // 5.6. Specify the path and include path parameter
+        // 5.7. Send some string as a request body
+        // 5.8. Receive the response, aggregate it and transform it to string
+        // 5.9. Subscribe to the returned Mono<String> and block
+        String response = null;
+
+        assertEquals("Hello World!", response);
 
         // TODO
         // Task 2:
