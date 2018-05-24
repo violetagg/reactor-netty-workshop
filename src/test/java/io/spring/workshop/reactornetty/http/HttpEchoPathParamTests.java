@@ -22,6 +22,16 @@ public class HttpEchoPathParamTests {
         // 1.2. Configure the port to which this server should bind
         // 1.3. Start the server in a blocking fashion and wait for it
         //      to finish initializing
+        //
+        // Task 3:
+        // 3.3. Apply a wire logger configuration
+        //
+        // Task 4:
+        // 4.1. Define that the server will respond to POST requests
+        // 4.2. Define the expected URI
+        // 4.3. Define path parameter
+        // 4.4. As a response send the received request body, which
+        //      is transformed to string and concatenated with the path parameter
         DisposableServer server = null;
 
         assertNotNull(server);
