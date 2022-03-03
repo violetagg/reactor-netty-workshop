@@ -8,12 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.netty.DisposableServer;
+import reactor.netty.http.client.HttpClient;
 import reactor.netty.http.server.HttpServer;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
@@ -70,6 +72,27 @@ public class HttpEncodeAndDecodeJsonTests {
                           .bindNow(); // Starts the server in a blocking fashion, and waits for it to finish initializing.
 
         assertNotNull(server);
+
+        Pojo response =
+                HttpClient.create()            // Prepares a HTTP client for configuration.
+                          .port(server.port()) // Obtains the server's port and provides it as a port to which this
+                                               // client should connect.
+                          // Extends the channel pipeline.
+                          .doOnResponse((res, conn) -> conn.addHandler(new JsonObjectDecoder()))
+                          .wiretap(true)       // Applies a wire logger configuration.
+                          .post()              // Specifies that POST method will be used.
+                          .uri("/test")        // Specifies the path.
+                          .send(Flux.range(1, 10)
+                                    .map(i -> new Pojo("test " + i))
+                                    .collectList()
+                                    .map(jsonEncoder))
+                          .response((res, byteBufFlux) ->
+                              byteBufFlux.asString()
+                                         .map(jsonDecoder)
+                                         .concatMap(Flux::fromArray))
+                          .blockLast();
+
+        assertEquals("test 10", response.getName());
 
         server.disposeNow();          // Stops the server and releases the resources.
     }
