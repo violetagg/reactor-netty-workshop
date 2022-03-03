@@ -10,8 +10,11 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Learn how to create UDP server
@@ -22,14 +25,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class UdpSupportsReceivingDatagramTests {
 
     @Test
-    public void supportsReceivingDatagramTest() {
+    public void supportsReceivingDatagramTest() throws Exception {
         LoopResources loopResources = LoopResources.create("srd-test-udp");
+        CountDownLatch latch = new CountDownLatch(4);
         Connection server1 =
                 UdpServer.create() // Prepares a UDP server for configuration.
                          .port(0)  // Configures the port number as zero, this will let the system pick up
                                    // an ephemeral port when binding the server.
                          .runOn(loopResources)     // Configures the UDP server to run on a specific LoopResources.
                          .wiretap(true)            // Applies a wire logger configuration.
+                         .handle((in, out) ->
+                                 in.receive()
+                                   .asByteArray()
+                                   .doOnNext(bytes -> {
+                                       if (bytes.length == 1024) {
+                                           latch.countDown();
+                                       }
+                                   })
+                                   .then())
                          .bind()   // Binds the UDP server and returns a Mono<Connection>.
                          .block(); // Blocks and waits the server to finish initialising.
 
@@ -63,6 +76,8 @@ public class UdpSupportsReceivingDatagramTests {
                          .block(); // Blocks and waits the server to finish initialising.
 
         assertNotNull(server2);
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
 
         server1.disposeNow();       // Stops the server and releases the resources.
 
