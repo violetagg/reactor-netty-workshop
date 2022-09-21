@@ -81,7 +81,7 @@ public class HttpEncodeAndDecodeJsonTests {
 
         // TODO
         // Task 5:
-        // 5.1. Prepare the TCP client
+        // 5.1. Prepare the HTTP client
         // 5.2. Obtain the server's port and provide it as a port to which this
         //      client should connect
         // 5.3. Apply a wire logger configuration
