@@ -1,7 +1,8 @@
 package io.spring.workshop.reactornetty.tcp;
 
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
+import io.netty.pkitesting.CertificateBuilder;
+import io.netty.pkitesting.X509Bundle;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 import reactor.netty.Connection;
@@ -33,9 +34,9 @@ public class TcpSendFileTests {
 
     @Test
     public void sendFileTest() throws Exception {
-        SelfSignedCertificate cert = new SelfSignedCertificate();
+        X509Bundle cert = new CertificateBuilder().subject("CN=localhost").setIsCertificateAuthority(true).buildSelfSigned();
         TcpSslContextSpec sslContextBuilder =
-                TcpSslContextSpec.forServer(cert.certificate(), cert.privateKey());
+                TcpSslContextSpec.forServer(cert.toTempCertChainPem(), cert.toTempPrivateKeyPem());
         DisposableServer server =
                 TcpServer.create()   // Prepares a TCP server for configuration.
                          .port(0)    // Configures the port number as zero, this will let the system pick up
