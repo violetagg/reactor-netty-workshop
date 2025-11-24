@@ -4,8 +4,8 @@ Violeta Georgieva - VMware
 :source-highlighter: prettify
 :icons: font
 :toc:
-:reactor-core: 3.4.15
-:reactor-netty: 1.0.16
+:reactor-core: 3.8.0
+:reactor-netty: 1.3.0
 
 This repository hosts a complete workshop on `Reactor Netty`.
 
@@ -19,7 +19,7 @@ Reference documentation can be useful while creating those servers and clients:
 
 * https://projectreactor.io/docs/netty/release/api/[Reactor Netty javadoc]
 * https://projectreactor.io/docs/core/release/api/[Reactor Core javadoc]
-* https://netty.io/wiki/index.html[Netty documentation] (Reactor Netty uses Netty 4.1.x)
+* https://netty.io/wiki/index.html[Netty documentation] (Reactor Netty uses Netty 4.2.x)
 
 == Prerequisites
 
